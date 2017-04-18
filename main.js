@@ -5,6 +5,7 @@ const chalk = require('chalk');
 
 /**
  * private method: initialization purpose
+ * each block is double-chained to access it closest neigbours (upside and dowside)
  */
 function _init(tab, blocks, n) {
   for (let index = 0; index < n; index++) {
@@ -18,7 +19,7 @@ function _init(tab, blocks, n) {
 }
 
 /**
- * main loop function
+ * main loop function, basic automation that keeps reading standard input, line by line
  */
 function mainLoop() {
   let n, commandLine, order, coordination;
@@ -58,16 +59,16 @@ function mainLoop() {
     target_block = blocks[target];
 
     // In case order is illegal, skip it
-    if(source_block.table_position == target_block.table_position) {
+    if(source_block.table_position === target_block.table_position) {
       continue;
     }
 
-    // unstack blocks downside `target_block` when coordination word has been set to `onto`
+    // unstack blocks which are downside `target_block` when coordination word has been set to `onto`
     if(coordination === stackServices.COORDINATIONS.onto) {
       stackServices.unStack(table, target_block);
     }
 
-    // unstack blocks which upside `source_block` when order has been set to `move`
+    // unstack blocks which are upside `source_block` when order has been set to `move`
     if(order === stackServices.ORDERS.move) {
       stackServices.unStack(table, source_block);
     }
