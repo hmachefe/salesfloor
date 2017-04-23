@@ -6,6 +6,7 @@
   "dependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-node6": "^11.0.0",
+    "line-reader": "^0.4.0",
     "readline-sync": "^1.4.7"
   },
   "devDependencies": {},
