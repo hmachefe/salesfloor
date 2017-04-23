@@ -1,9 +1,10 @@
 const stackServices = require("./stackServices.js");
+
 /**
  * modules exportation supported by node 6
  */
 module.exports = {
-   parseCommand: function (commandLine, blocks) {
+   parseCommand: (commandLine, blocks) => {
 		const commandWords = commandLine.split(" ")
 		const source = commandWords[1]; 	// Get the source
 		const target = commandWords[3];		// Get the target

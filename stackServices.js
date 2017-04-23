@@ -31,7 +31,7 @@ module.exports = {
     /**
      * initialization purpose, creating `tab` array and `blocks` returned as an array of empty blocks
      */
-    init: function (tab, n) {
+    init: (tab, n) => {
       const blocks = [];
       for (let index = 0; index < n && BLOCKS_MAX; index++) {
         blocks[index] = {
@@ -47,7 +47,7 @@ module.exports = {
     /**
      * method that displays output result, after quit-ing main loop automation
      */
-    displayTableStacks: function (tab) {
+    displayTableStacks: (tab) => {
         for (let index = 0; index < tab.length; index++) {
             let msg = `${index} :`;
             for (let block = tab[index]; block !== undefined; block = block.upward)  {
@@ -60,7 +60,7 @@ module.exports = {
      * method that un-stacks blocks from their pile and place them back again
      * 'flat' on the table at their previous location (by block.original_value)
      */
-    unStack: function (tab, block) {
+    unStack: (tab, block) => {
         let temp;
         while (undefined !== block.upward) {
             temp = block.upward;
@@ -75,7 +75,7 @@ module.exports = {
      * method that piles blocks from their current location (source.table_position)
      * and place them on top of another pile (target.table_postion)
      */
-    stack: function (tab, source, target) {
+    stack: (tab, source, target) => {
         let top_target = _top(target);
         let source_downward = source.downward;
         let table_position = target.table_position;

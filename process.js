@@ -1,9 +1,10 @@
 const stackServices = require("./stackServices.js");
+
 /**
  * modules exportation supported by node 6
  */
 module.exports = {
-	executeCommand: function(table, commands) {
+	executeCommand: (table, commands) => {
 	    // In case order is illegal, skip it
 		if(commands.source_block.table_position === commands.target_block.table_position) {
 			return;

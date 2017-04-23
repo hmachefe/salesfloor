@@ -10,17 +10,17 @@ let table = [];
 let blocksWorld;
 let lineCounter = 0;
 
-//basic automation that keeps reading processing command line
+//basic automation that keeps reading command line and processing it
 lineReader.eachLine('blocksWorld.txt', function(commandLine, last) {
-  let commands;
-  if(last || (commandLine === stackServices.ORDERS.quit)) {
-    return stackServices.displayTableStacks(table);
-  }
-  if (lineCounter === 0) { // TODO: find a less disgraceful way to get first line
-    blocksWorld = stackServices.init(table, parseInt(commandLine));
-  } else { // lineCounter === 1 or even greater
-    commands = parser.parseCommand(commandLine, blocksWorld);
-    processor.executeCommand(table, commands);
-  }
-  lineCounter++;
+    let commands;
+    if(last || (commandLine === stackServices.ORDERS.quit)) {
+        return stackServices.displayTableStacks(table);
+    }
+    if (lineCounter === 0) { // TODO: find a less disgraceful way to get first line
+        blocksWorld = stackServices.init(table, parseInt(commandLine));
+    } else { // lineCounter === 1 or even greater
+        commands = parser.parseCommand(commandLine, blocksWorld);
+        processor.executeCommand(table, commands);
+    }
+    lineCounter++;
 });
