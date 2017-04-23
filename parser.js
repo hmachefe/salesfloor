@@ -3,7 +3,7 @@ const stackServices = require("./stackServices.js");
  * modules exportation supported by node 6
  */
 module.exports = {
-	_init: function (n) {
+	init: function (tab, n) {
 	  const blocks = [];
 	  for (let index = 0; index < n && stackServices.MAX; index++) {
 		blocks[index] = {
@@ -12,7 +12,8 @@ module.exports = {
 			upward: undefined,
 			downward: undefined
 	    };
-	  }	
+	  	tab[index] = blocks[index];
+	  }
 	  return blocks;
 	},
    parseCommand: function (commandLine, blocks) {
@@ -27,24 +28,25 @@ module.exports = {
 			target_block: blocks[target],
 		};
 	},
-	executeCommand: function(blockWorld, commands) {
+	executeCommand: function(table, commands) {
 	    // In case order is illegal, skip it
 		if(commands.source_block.table_position === commands.target_block.table_position) {
 			return;
 		}
-	
+
 		// unstack blocks which are downside `target_block` when coordination word has been set to `onto`
 		if(commands.coordination === stackServices.COORDINATIONS.onto) {
-		  stackServices.unStack(blockWorld, commands.target_block);
+		  stackServices.unStack(table, commands.target_block);
 		}
 
 		// unstack blocks which are upside `source_block` when order has been set to `move`
 		if(commands.order === stackServices.ORDERS.move) {
-		  stackServices.unStack(blockWorld, commands.source_block);
+		  stackServices.unStack(table, commands.source_block);
 		}
 
 		// Put `source_block` over `target_block`
-		stackServices.stack(blockWorld, commands.source_block, commands.target_block);
+		stackServices.stack(table, commands.source_block, commands.target_block);
+
 	}
 
 };

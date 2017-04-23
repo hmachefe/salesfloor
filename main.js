@@ -8,28 +8,21 @@ const chalk = require('chalk');
  * main loop function, basic automation that keeps reading standard input, line by line
  */
 function mainLoop() {
-
+  let table = [];
   console.log(chalk.green('Enter the number of blocks'));
   const n = readlineSync.question("");
-  const blocksWorld = parser._init(n);
-  
-  console.log(chalk.blue('Enter the sequence of block commands, one command per line'));
+  const blocksWorld = parser.init(table, n);
+
   while (true) {
-
-    // as long as user enters text line..
-    commandLine = readlineSync.question("");
-
-    /* in case orders have been completed, le's break the infinite loop */
-    if (commandLine === 'quit') {
+    commandLine = readlineSync.question(""); // as long as user enters text line..
+    if (commandLine === 'quit') { /* in case orders get completed, let's break the infifite loop */
       break;
     }
-	
-	const commands = parser.parseCommand(commandLine, blocksWorld);
-	parser.executeCommand(blocksWorld, commands);
-	
+    const commands = parser.parseCommand(commandLine, blocksWorld);
+    parser.executeCommand(table, commands);
   }
 
-  stackServices.displayTableStacks(blocksWorld);
+  stackServices.displayTableStacks(table);
 }
 
 mainLoop();
