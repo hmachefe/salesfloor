@@ -28,10 +28,10 @@ module.exports = {
     /**
      * method that displays output result, after quit-ing main loop automation
      */
-    displayTableStacks: function (tab, n) {
-        for (let index = 0; index < n; index++) {
+    displayTableStacks: function (blockWorld) {
+        for (let index = 0; index < blockWorld.length; index++) {
             let msg = `${index} :`;
-            for (let block = tab[index]; block !== undefined; block = block.upward)  {
+            for (let block = blockWorld[index]; block !== undefined; block = block.upward)  {
                 msg += ` ${block.original_value}`;
             }
             console.log(msg);
