@@ -1,3 +1,5 @@
+const BLOCKS_MAX = 25;
+
 /**
  * private method: local purpose
  */
@@ -15,7 +17,7 @@ module.exports = {
     /**
      * few constant structures here
      */
-    MAX: 25,
+    MAX: BLOCKS_MAX,
     ORDERS: {
         move: 'move',
         pile: 'pile'
@@ -25,6 +27,22 @@ module.exports = {
         over: 'over'
     },
 
+    /**
+     * initialization purpose, creating `tab` array and `blocks` returned as an array of empty blocks
+     */
+    init: function (tab, n) {
+      const blocks = [];
+      for (let index = 0; index < n && BLOCKS_MAX; index++) {
+        blocks[index] = {
+            table_position: index,
+            original_value: index,
+            upward: undefined,
+            downward: undefined
+        };
+        tab[index] = blocks[index];
+      }
+      return blocks;
+    },
     /**
      * method that displays output result, after quit-ing main loop automation
      */
