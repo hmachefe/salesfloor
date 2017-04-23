@@ -1,9 +1,11 @@
-const BLOCKS_MAX = 25;
+const fs = require('fs');
+// TODO: offer file reading harmonization, as a common service. Decide about synchronization (blocking or not)
+var CONFIG = JSON.parse(fs.readFileSync('configuration.json', 'utf8'));
 
 /**
  * private method: local purpose
  */
-function _top (block) {
+_top = function (block) {
     while (undefined !== block.upward) {
       block = block.upward;
     }
@@ -17,30 +19,21 @@ module.exports = {
     /**
      * few constant structures here
      */
-    MAX: BLOCKS_MAX,
-    ORDERS: {
-        move: 'move',
-        pile: 'pile',
-        quit: 'quit'
-    },
-    COORDINATIONS: {
-        onto: 'onto',
-        over: 'over'
-    },
+    configuration: CONFIG,
 
     /**
      * initialization purpose, creating `tab` array and `blocks` returned as an array of empty blocks
      */
     init: (tab, n) => {
-      const blocks = [];
-      for (let index = 0; index < n && BLOCKS_MAX; index++) {
-        blocks[index] = {
-            table_position: index,
-            original_value: index,
-            upward: undefined,
-            downward: undefined
-        };
-        tab[index] = blocks[index];
+        const blocks = [];
+        for (let index = 0; index < n && CONFIG.BLOCKS_MAX; index++) {
+            blocks[index] = {
+                table_position: index,
+                original_value: index,
+                upward: undefined,
+                downward: undefined
+          };
+          tab[index] = blocks[index];
       }
       return blocks;
     },

@@ -10,10 +10,10 @@ let table = [];
 let blocksWorld;
 let lineCounter = 0;
 
-//basic automation that keeps reading command line and processing it
-lineReader.eachLine('blocksWorld.txt', function(commandLine, last) {
+//basic automation that keeps reading each command line and processing
+lineReader.eachLine(stackServices.configuration.SCENARIO_FILE, function(commandLine, last) {
     let commands;
-    if(last || (commandLine === stackServices.ORDERS.quit)) {
+    if(last || (commandLine === stackServices.configuration.ORDERS.quit)) {
         return stackServices.displayTableStacks(table);
     }
     if (lineCounter === 0) { // TODO: find a less disgraceful way to get first line

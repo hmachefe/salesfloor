@@ -10,11 +10,11 @@ module.exports = {
 			return;
 		}
 		// unstack blocks which are downside `target_block` when coordination word has been set to `onto`
-		if(commands.coordination === stackServices.COORDINATIONS.onto) {
+		if(commands.coordination === stackServices.configuration.COORDINATIONS.onto) {
 		  stackServices.unStack(table, commands.target_block);
 		}
 		// unstack blocks which are upside `source_block` when order has been set to `move`
-		if(commands.order === stackServices.ORDERS.move) {
+		if(commands.order === stackServices.configuration.ORDERS.move) {
 		  stackServices.unStack(table, commands.source_block);
 		}
 		// Put `source_block` over `target_block`

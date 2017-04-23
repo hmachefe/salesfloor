@@ -1,0 +1,13 @@
+{
+    "SCENARIO_FILE": "blocksWorldScenario.txt",
+    "BLOCKS_MAX": 25,
+    "ORDERS": {
+        "move": "move",
+        "pile": "pile",
+        "quit": "quit"
+    },
+    "COORDINATIONS": {
+        "onto": "onto",
+        "over": "over"
+    }
+}
