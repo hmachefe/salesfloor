@@ -16,7 +16,7 @@ function mainLoop() {
 
   while (true) {
     commandLine = readlineSync.question(""); // as long as user enters text line..
-    if (commandLine === 'quit') { // in case orders get completed, let's break the infifite loop
+    if (commandLine === stackServices.ORDERS.quit) { // in case orders get completed, let's break the infifite loop
       break;
     }
     const commands = parser.parseCommand(commandLine, blocksWorld);

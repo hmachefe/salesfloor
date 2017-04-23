@@ -20,7 +20,8 @@ module.exports = {
     MAX: BLOCKS_MAX,
     ORDERS: {
         move: 'move',
-        pile: 'pile'
+        pile: 'pile',
+        quit: 'quit'
     },
     COORDINATIONS: {
         onto: 'onto',
