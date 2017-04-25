@@ -1,4 +1,5 @@
 ## Synopsis
+Find a solution for https://uva.onlinejudge.org/external/1/p101.pdf
 
 Here is the solution entry point: "main.js".
 Use node version 7 to make it work (for its support of ES6)
@@ -22,7 +23,7 @@ npm install
 
 ## API Reference
 
-'readline-sync'
+'line-reader'
 'chalk'
 
 
@@ -33,7 +34,7 @@ N.A.
 
 ## Contributors
 
-hugo.machefe@gmail.com
+hugo.machefer@gmail.com
 
 
 ## License
