@@ -2,7 +2,6 @@
 const stackServices = require("./stackServices.js");
 const parser = require("./parser.js");
 const processor = require("./process.js");
-const readlineSync = require('readline-sync');
 const chalk = require('chalk');
 const lineReader = require('line-reader');
 
@@ -16,7 +15,9 @@ function startReader(scenarioFile) {
     lineReader.eachLine(scenarioFile, function(commandLine, last) {
         let commands;
         if(last || (commandLine === stackServices.configuration.ORDERS.quit)) {
-            return stackServices.displayTableStacks(table);
+            let report = stackServices.displayTableStacks(table);
+            stackServices.generateReport(report);
+            return;
         }
         if (lineCounter === 0) { // TODO: find a less disgraceful way to get first line
             blocksWorld = stackServices.init(table, parseInt(commandLine));

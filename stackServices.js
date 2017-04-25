@@ -41,13 +41,23 @@ module.exports = {
      * method that displays output result, after quit-ing main loop automation
      */
     displayTableStacks: (tab) => {
+        let messageReport = '';
         for (let index = 0; index < tab.length; index++) {
-            let msg = `${index} :`;
+            let message = `${index} :`;
             for (let block = tab[index]; block !== undefined; block = block.upward)  {
-                msg += ` ${block.original_value}`;
+                message += ` ${block.original_value}`;
             }
-            console.log(msg);
+            console.log(message);
+            messageReport += message + '\r\n';
         }
+        return messageReport;
+    },
+    generateReport: (report) => {
+        let stream = fs.createWriteStream("report.txt");
+        stream.once('open', function(fd) {
+            stream.write(report);
+            stream.end();
+        });
     },
     /**
      * method that un-stacks blocks from their pile and place them back again
