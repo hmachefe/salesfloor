@@ -1,6 +1,7 @@
 const fs = require('fs');
 // TODO: offer file reading harmonization, as a common service. Decide about synchronization (blocking or not)
 let CONFIG_FILE = JSON.parse(fs.readFileSync('configuration.json', 'utf8'));
+let instance = null;
 
 /**
  * private method: local purpose
@@ -12,8 +13,25 @@ let _top = function (block) {
     return block;
 }
 
+/**
+ * establish chaining between destination and origin blocks (vice-versa)
+ */
+let _doubleBindBlocks = function (destination, origin) {
+      destination.upward = origin;
+      origin.downward = destination;
+};
 
-let instance = null;
+/**
+ * put a given `block` (and its siblings below in same column) to a new `position`
+ */
+let _moveBlocksToPosition = function (block, position) {
+    block.table_position = position;
+    block = block.upward;
+    while (undefined !== block) {
+        block.table_position = position;
+        block = block.upward;
+    }
+};
 
 class Config {
 
@@ -87,7 +105,7 @@ class Config {
   stack (tab, source, target) {
       let top_target = _top(target);
       let source_downward = source.downward;
-      let table_position = target.table_position;
+      let position = target.table_position;
 
       if (undefined !== source_downward) {
           source_downward.upward = undefined;
@@ -95,15 +113,12 @@ class Config {
           tab[source.original_value] = undefined;
       }
 
-      top_target.upward = source;
-      source.downward = top_target;
+      // bind `top_target` block to `source` one back and forth
+      _doubleBindBlocks(top_target, source);
 
-      while (undefined !== source) {
-          source.table_position = table_position;
-          source = source.upward;
-      }
+      // move block and siblings on top of if to new position
+      _moveBlocksToPosition(source, position);
   }
-
 }
 
 
