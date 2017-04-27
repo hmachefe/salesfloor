@@ -1,11 +1,11 @@
 const fs = require('fs');
 // TODO: offer file reading harmonization, as a common service. Decide about synchronization (blocking or not)
-var CONFIG_FILE = JSON.parse(fs.readFileSync('configuration.json', 'utf8'));
+let CONFIG_FILE = JSON.parse(fs.readFileSync('configuration.json', 'utf8'));
 
 /**
  * private method: local purpose
  */
-_top = function (block) {
+let _top = function (block) {
     while (undefined !== block.upward) {
       block = block.upward;
     }
