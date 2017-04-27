@@ -1,10 +1,12 @@
 // import { MAX, stack, unStack, displayTableStacks } from 'stackServices';
 const stackServices = require("./stackServices.js");
-const parser = require("./parser.js");
-const processor = require("./process.js");
-const chalk = require('chalk');
+const parsingModule = require("./parser.js");
+const processingModule = require("./process.js");
 const lineReader = require('line-reader');
 const SCENARIO_FILE = process.argv[2];
+const parserInstance = new parsingModule.parserClass();
+const processorInstance = new processingModule.processorClass();
+const configInstance = new stackServices.configClass();
 
 
 class BlocksWorldAutomation {
@@ -20,7 +22,6 @@ class BlocksWorldAutomation {
         //basic automation that keeps reading each command line and processing
         lineReader.eachLine(this.scenarioFile, (commandLine, last) => {
             let commands;
-            configInstance = new stackServices.configClass();
             if(last || (commandLine === configInstance.configuration.ORDERS.quit)) {
                 let report = configInstance.displayTableStacks(this.table);
                 configInstance.generateReport(report);
@@ -32,8 +33,8 @@ class BlocksWorldAutomation {
                 blocksWorld = configInstance.init(this.table, parseInt(commandLine));
                 this.stackServicesInitialized = true;
             } else {
-                commands = parser.parseCommand(commandLine, blocksWorld);
-                processor.executeCommand(this.table, commands);
+                commands = parserInstance.parseCommand(commandLine, blocksWorld);
+                processorInstance.executeCommand(this.table, commands);
             }
         });
     }

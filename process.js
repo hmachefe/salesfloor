@@ -1,12 +1,9 @@
 const stackServices = require("./stackServices.js");
-
 configInstance = new stackServices.configClass();
 
-/**
- * modules exportation supported by node 6
- */
-module.exports = {
-	executeCommand: (table, commands) => {
+class Processor {
+
+	executeCommand (table, commands) {
 	    // In case order is illegal, skip it
 		if(commands.source_block.table_position === commands.target_block.table_position) {
 			return;
@@ -22,4 +19,14 @@ module.exports = {
 		// Put `source_block` over `target_block`
 		configInstance.stack(table, commands.source_block, commands.target_block);
 	}
+
+}
+
+/**
+ * modules exportation supported by node 6
+ */
+module.exports = {
+
+	processorClass: Processor
+
 };
