@@ -7,7 +7,7 @@ const lineReader = require('line-reader');
 
 let table = [];
 let blocksWorld;
-let lineCounter = 0;
+let stackServicesInitialized = false;
 
 function startReader(scenarioFile) {
     scenarioFile = scenarioFile || stackServices.configuration.SCENARIO_FILE;
@@ -19,13 +19,15 @@ function startReader(scenarioFile) {
             stackServices.generateReport(report);
             return;
         }
-        if (lineCounter === 0) { // TODO: find a less disgraceful way to get first line
+        if (!stackServicesInitialized) {
+            // TODO: try to even find better way.. , for instance:
+            // if (Number.isInteger(ParseInt(commandLine)) {...}
             blocksWorld = stackServices.init(table, parseInt(commandLine));
+            stackServicesInitialized = true;
         } else { // lineCounter === 1 or even greater
             commands = parser.parseCommand(commandLine, blocksWorld);
             processor.executeCommand(table, commands);
         }
-        lineCounter++;
     });
 }
 
