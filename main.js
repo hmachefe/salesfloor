@@ -5,31 +5,40 @@ const processor = require("./process.js");
 const chalk = require('chalk');
 const lineReader = require('line-reader');
 
-let table = [];
-let blocksWorld;
-let stackServicesInitialized = false;
 
-function startReader(scenarioFile) {
-    scenarioFile = scenarioFile || stackServices.configuration.SCENARIO_FILE;
-    //basic automation that keeps reading each command line and processing
-    lineReader.eachLine(scenarioFile, function(commandLine, last) {
-        let commands;
-        if(last || (commandLine === stackServices.configuration.ORDERS.quit)) {
-            let report = stackServices.displayTableStacks(table);
-            stackServices.generateReport(report);
-            return;
-        }
-        if (!stackServicesInitialized) {
-            // TODO: try to even find better way.. , for instance:
-            // if (Number.isInteger(ParseInt(commandLine)) {...}
-            blocksWorld = stackServices.init(table, parseInt(commandLine));
-            stackServicesInitialized = true;
-        } else { // lineCounter === 1 or even greater
-            commands = parser.parseCommand(commandLine, blocksWorld);
-            processor.executeCommand(table, commands);
-        }
-    });
+class BlocksWorldAutomation {
+
+    constructor(defaultTable = [], stackServicesInitialized = false, scenarioFile = stackServices.configuration.SCENARIO_FILE) {
+        this.scenarioFile = scenarioFile;
+        this.table = defaultTable;
+        this.stackServicesInitialized = false;
+    }
+
+    start () {
+        let blocksWorld;
+        //basic automation that keeps reading each command line and processing
+        lineReader.eachLine(this.scenarioFile, (commandLine, last) => {
+            let commands;
+            configInstance = new stackServices.configClass();
+            if(last || (commandLine === configInstance.configuration.ORDERS.quit)) {
+                let report = configInstance.displayTableStacks(this.table);
+                configInstance.generateReport(report);
+                return;
+            }
+            if (!this.stackServicesInitialized) {
+                // TODO: try to even find better way.. , for instance:
+                // if (Number.isInteger(ParseInt(commandLine)) {...}
+                blocksWorld = configInstance.init(this.table, parseInt(commandLine));
+                this.stackServicesInitialized = true;
+            } else {
+                commands = parser.parseCommand(commandLine, blocksWorld);
+                processor.executeCommand(this.table, commands);
+            }
+        });
+    }
+
 }
 
 const SCENARIO_FILE = process.argv[2];
-startReader(SCENARIO_FILE);
+let blocksMachine = new BlocksWorldAutomation([], false, SCENARIO_FILE);
+blocksMachine.start();

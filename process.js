@@ -1,5 +1,7 @@
 const stackServices = require("./stackServices.js");
 
+configInstance = new stackServices.configClass();
+
 /**
  * modules exportation supported by node 6
  */
@@ -11,13 +13,13 @@ module.exports = {
 		}
 		// unstack blocks which are downside `target_block` when coordination word has been set to `onto`
 		if(commands.coordination === stackServices.configuration.COORDINATIONS.onto) {
-		  stackServices.unStack(table, commands.target_block);
+		  configInstance.unStack(table, commands.target_block);
 		}
 		// unstack blocks which are upside `source_block` when order has been set to `move`
 		if(commands.order === stackServices.configuration.ORDERS.move) {
-		  stackServices.unStack(table, commands.source_block);
+		  configInstance.unStack(table, commands.source_block);
 		}
 		// Put `source_block` over `target_block`
-		stackServices.stack(table, commands.source_block, commands.target_block);
+		configInstance.stack(table, commands.source_block, commands.target_block);
 	}
 };
