@@ -4,6 +4,7 @@ const parser = require("./parser.js");
 const processor = require("./process.js");
 const chalk = require('chalk');
 const lineReader = require('line-reader');
+const SCENARIO_FILE = process.argv[2];
 
 
 class BlocksWorldAutomation {
@@ -39,6 +40,6 @@ class BlocksWorldAutomation {
 
 }
 
-const SCENARIO_FILE = process.argv[2];
-let blocksMachine = new BlocksWorldAutomation([], false, SCENARIO_FILE);
+const initArgs = [[], false, SCENARIO_FILE];
+const blocksMachine = new BlocksWorldAutomation(...initArgs);
 blocksMachine.start();
